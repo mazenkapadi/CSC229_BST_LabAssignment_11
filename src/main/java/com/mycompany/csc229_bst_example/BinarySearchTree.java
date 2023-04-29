@@ -56,28 +56,64 @@ public class BinarySearchTree {
 
     private void doInOrder(BstNode root) {
 
-        // ToDo 1: complete InOrder Traversal 
+        // ToDo 1: complete InOrder Traversal
+        if(root==null)
+            return;
+        doInOrder(root.getLeft());
+        System.out.println(root + " ");
+        doInOrder(root.getRight());
     }
         public void preOrderTraversal() {
         doPreOrder(this.root);
         // ToDo 2: complete the pre-order travesal . 
     }
+    private void doPreOrder(BstNode root){
+        if(root==null)
+            return;
+        System.out.println(root + " ");
+        doPreOrder(root.getLeft());
+        doPreOrder(root.getRight());
+    }
 
     public Integer findHeight() {
         // ToDo 3: Find the height of a tree
+        return getNodeHeight(this.root);
     }
 
+    private Integer getNodeHeight(BstNode node){
+        if(node == null)
+            return -1;
+        return Math.max(getNodeHeight(node.getLeft()), getNodeHeight(node.getRight()))+1;
+    }
     
 
     public int getDepth(BstNode node) {
-        //ToDo 4: complete getDepth of a node 
+        //ToDo 4: complete getDepth of a node
+        if(node == null)
+            return 0;
+        else {
+            int Depth1 = getDepth(node.getLeft());
+            int Depth2 = getDepth(node.getRight());
+
+            if (Depth1 > Depth2)
+                return (Depth1 + 1);
+            else
+                return (Depth2 + 1);
+        }
     }
+
     
    public void print() {
        System.out.println("\n==== BST Print ===== \n");
         print("", root, false);
         // ToDo 5: complete the print of the BST
     }
+    private void print(String str, BstNode node, boolean isLeft){
+        if(node!=null)  {
+            System.out.println(str + (isLeft ? "|--" : "\\--"));
 
-
+            print(str + (isLeft ? "| " : " "), node.getLeft(), true);
+            print(str + (isLeft ? "| " : " "), node.getRight(), false);
+        }
+    }
 }
